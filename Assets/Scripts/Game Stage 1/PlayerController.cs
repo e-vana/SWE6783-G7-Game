@@ -5,10 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public Camera sceneCamera;
     public float moveSpeed = 1f;
     public float collisionOffset = 0.05f;
     public ContactFilter2D movementFilter;
+    public Weapon weapon;
 
+    private Vector2 mousePosition;
     Vector2 movementInput;
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
@@ -24,10 +27,38 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        ProcessInputs();
     }
 
     private void FixedUpdate()
+    {
+        Move();
+    }
+
+    private void ProcessInputs()
+    {
+        mousePosition = sceneCamera.ScreenToWorldPoint(Input.mousePosition);
+
+        Vector2 aimDirection = mousePosition - rb.position;
+
+        if (aimDirection.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (aimDirection.x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+
+        float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            weapon.Fire(aimAngle);
+        }
+    }
+
+    private void Move()
     {
         if (movementInput != Vector2.zero)
         {
@@ -42,15 +73,6 @@ public class PlayerController : MonoBehaviour
                     success = TryMove(new Vector2(0, movementInput.y));
                 }
             }
-        }
-
-        if (movementInput.x < 0)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (movementInput.x > 0)
-        {
-            spriteRenderer.flipX = false;
         }
     }
 
