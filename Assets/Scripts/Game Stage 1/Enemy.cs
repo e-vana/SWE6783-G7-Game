@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public float collisionOffset = 0.1f;
     public ContactFilter2D movementFilter;
@@ -11,6 +11,7 @@ public class EnemyMovement : MonoBehaviour
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     public float speed = 1f;
     private Transform target;
+    private float health = 10;
 
     private void Start()
     {
@@ -19,6 +20,10 @@ public class EnemyMovement : MonoBehaviour
     }
     // Update is called once per frame
     void Update()
+    {
+    }
+
+    private void FixedUpdate()
     {
         Move();
     }
@@ -32,19 +37,19 @@ public class EnemyMovement : MonoBehaviour
 
             if (!success)
             {
-                success = TryMove(Vector2.left * step);
+                success = TryMove(Vector2.left, step);
 
                 if (!success)
                 {
-                    success = TryMove(Vector2.up * step);
+                    success = TryMove(Vector2.up, step);
 
                     if (!success)
                     {
-                        success = TryMove(Vector2.right * step);
+                        success = TryMove(Vector2.right, step);
 
                         if (!success)
                         {
-                            success = TryMove(Vector2.down * step);
+                            success = TryMove(Vector2.down, step);
                         }
                     }
                 }
@@ -62,6 +67,8 @@ public class EnemyMovement : MonoBehaviour
                         speed * Time.fixedDeltaTime + collisionOffset // The amount to cast equal to the movement plus an offset
                     );
 
+        Debug.Log("Chasing " + direction + " " + count);
+
             if (count == 0)
             {
                 transform.position = direction;
@@ -74,7 +81,7 @@ public class EnemyMovement : MonoBehaviour
 
     }
 
-    private bool TryMove(Vector2 direction)
+    private bool TryMove(Vector2 direction, float step)
     {
         // Check for collisons
         int count = rb.Cast(
@@ -84,15 +91,27 @@ public class EnemyMovement : MonoBehaviour
                     speed * Time.fixedDeltaTime + collisionOffset // The amount to cast equal to the movement plus an offset
                 );
 
+        Debug.Log("Trying " + direction + " " + count);
+
         if (count == 0)
         {
-            rb.MovePosition(rb.position + direction);
+            rb.MovePosition(rb.position + (direction * step));
             return true;
         }
         else
         {
+            Debug.Log("Collision");
             return false;
         }
 
+    }
+
+    public void TakeDamage()
+    {
+        health -= 10;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
