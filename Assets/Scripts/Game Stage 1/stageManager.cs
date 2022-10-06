@@ -2,12 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class stageManager : MonoBehaviour
 {
     public float currentTime;
-    public TMPro.TMP_Text timerText;
     private string currentTimeString;
+    public string sessionId;
+    public int currentStage;
+    public string currentStageString = "0";
+    public int currentScore = 0;
+    public string currentScoreString = "Score:0";
+    public TMPro.TMP_Text timerText;
+    public TMPro.TMP_Text stageText;
+    public TMPro.TMP_Text scoreText;
+
+
+
     private void stageTimer()
     {
         currentTime = Time.timeSinceLevelLoad;
@@ -23,12 +34,38 @@ public class stageManager : MonoBehaviour
         currentTimeString =  string.Format("{0:00}:{1:00}", minutes, seconds);
         timerText.text = currentTimeString;
     }
+    public void updateStage(int stage)
+    {
+        currentStage = stage;
+        currentStageString = currentStage.ToString();
+        stageText.text = "Stage:" + currentStageString;
+    }
+    public void updateScore(int score)
+    {
+        currentScore += score;
+        currentScoreString = currentScore.ToString();
+        Debug.Log(currentScoreString);
 
+        scoreText.text = "Score:" + currentScoreString;
 
-    // Update is called once per frame
+    }
+    public void setUID()
+    {
+        Guid g = Guid.NewGuid();
+        sessionId = g.ToString();
+    }
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+    private void Start()
+    {
+        setUID();
+        updateScore(0);
+        updateStage(1);
+    }
     void Update()
     {
         stageTimer();
-
     }
 }

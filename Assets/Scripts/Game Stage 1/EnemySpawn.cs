@@ -30,7 +30,6 @@ public class EnemySpawn : MonoBehaviour
     public void SpawnEnemy()
     {
         currentTime = (int)Time.timeSinceLevelLoad;
-        Debug.Log(currentTime);
         if (currentTime > 5)
         {
             if (currentTime % 2 == 0)

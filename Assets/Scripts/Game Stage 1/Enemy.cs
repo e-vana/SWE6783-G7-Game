@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
     public float collisionOffset = 0.1f;
     public ContactFilter2D movementFilter;
     Vector2 movementInput;
@@ -11,12 +12,16 @@ public class Enemy : MonoBehaviour
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     public float speed = 1f;
     private Transform target;
+
+    public stageManager stageManagement;
+    public int scoreValue = 10;
     private float health = 10;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindWithTag("Player").transform;
+        stageManagement = FindObjectOfType<stageManager>();
     }
     // Update is called once per frame
     void Update()
@@ -67,7 +72,7 @@ public class Enemy : MonoBehaviour
                         speed * Time.fixedDeltaTime + collisionOffset // The amount to cast equal to the movement plus an offset
                     );
 
-        Debug.Log("Chasing " + direction + " " + count);
+        //Debug.Log("Chasing " + direction + " " + count);
 
             if (count == 0)
             {
@@ -111,6 +116,8 @@ public class Enemy : MonoBehaviour
         health -= 10;
         if (health <= 0)
         {
+            //Update 
+            stageManagement.updateScore(scoreValue);
             Destroy(gameObject);
         }
     }
