@@ -11,11 +11,16 @@ public class PlayerController : MonoBehaviour
     public ContactFilter2D movementFilter;
     public Weapon weapon;
 
+    public AudioSource footstepSound;
+    private float timer = 0.0f;
+    private float stepSoundInterval = 0.3f;
+
     private Vector2 mousePosition;
     Vector2 movementInput;
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,9 +65,19 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
+        timer += Time.deltaTime;
         if (movementInput != Vector2.zero)
         {
             bool success = TryMove(movementInput);
+
+            if(timer > stepSoundInterval)
+            {
+                //play move audio effect
+                footstepSound.Play();
+                timer = 0.0f;
+            }
+
+            
 
             if (!success)
             {
@@ -101,4 +116,5 @@ public class PlayerController : MonoBehaviour
     {
         movementInput = movemventValue.Get<Vector2>();
     }
+
 }

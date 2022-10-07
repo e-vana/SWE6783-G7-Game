@@ -8,6 +8,8 @@ public class Weapon : MonoBehaviour
     public Transform firePoint;
     public float fireForce;
 
+    public AudioSource fireWeaponSound;
+
     public void Fire(float aimAngle)
     {
         Vector3 rotationvector = new Vector3(0, 0, aimAngle);
@@ -15,6 +17,8 @@ public class Weapon : MonoBehaviour
         firePoint.rotation = rotation;
         GameObject projectile = Instantiate(bullet, firePoint.position, firePoint.rotation);
         projectile.GetComponent<Rigidbody2D>().AddForce(firePoint.up * fireForce, ForceMode2D.Impulse);
+        //play sound effect
+        fireWeaponSound.Play();
     }
 
 }
