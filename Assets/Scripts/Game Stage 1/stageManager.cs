@@ -13,9 +13,13 @@ public class stageManager : MonoBehaviour
     public string currentStageString = "0";
     public int currentScore = 0;
     public string currentScoreString = "Score:0";
+    public int timesViewedControls = 1;
     public TMPro.TMP_Text timerText;
     public TMPro.TMP_Text stageText;
     public TMPro.TMP_Text scoreText;
+
+    public bool isControlCanvasShowing = false;
+    public GameObject controlCanvas;
 
 
 
@@ -47,12 +51,29 @@ public class stageManager : MonoBehaviour
         Debug.Log(currentScoreString);
 
         scoreText.text = "Score:" + currentScoreString;
-
     }
     public void setUID()
     {
         Guid g = Guid.NewGuid();
         sessionId = g.ToString();
+    }
+    public void showControlCanvas()
+    {
+        isControlCanvasShowing = false;
+        controlCanvas.SetActive(false);
+
+        //Triggers for a single frame, use to count control menu views.
+        if (Input.GetKeyDown("f1"))
+        {
+            Debug.Log(timesViewedControls);
+            timesViewedControls += 1;
+        }
+        //Triggers while a key is held down, use to render the controlCanvas.
+        if (Input.GetKey("f1"))
+        {
+            isControlCanvasShowing = true;
+            controlCanvas.SetActive(true);
+        }
     }
     private void Awake()
     {
@@ -67,5 +88,6 @@ public class stageManager : MonoBehaviour
     void Update()
     {
         stageTimer();
+        showControlCanvas();
     }
 }
