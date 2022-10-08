@@ -22,10 +22,10 @@ public class RandomSpawner : MonoBehaviour
     void Update()
     {
         elapsed += Time.deltaTime;
-        if (elapsed >= 1)
+        if (elapsed >= .5)
         {
             SpawnEnemy();
-            elapsed %= 1;
+            elapsed = 0.0f;
         }
     }
 
