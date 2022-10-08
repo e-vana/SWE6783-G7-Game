@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 
@@ -18,9 +20,11 @@ public class stageManager : MonoBehaviour
     public TMPro.TMP_Text stageText;
     public TMPro.TMP_Text scoreText;
 
-    public bool isControlCanvasShowing = false;
-    public GameObject controlCanvas;
+    public GameObject pauseMenu;
+    public bool isPauseMenuShowing = false;
 
+    public Button resumeButton;
+    public Button quitButton;
 
 
     private void stageTimer()
@@ -57,23 +61,50 @@ public class stageManager : MonoBehaviour
         Guid g = Guid.NewGuid();
         sessionId = g.ToString();
     }
-    public void showControlCanvas()
+    private void pauseHandler()
     {
-        isControlCanvasShowing = false;
-        controlCanvas.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.Escape) && isPauseMenuShowing == false)
+        {
+            isPauseMenuShowing = true;
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && isPauseMenuShowing == true)
+        {
+            isPauseMenuShowing = false;
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1;
+            return;
+        }
+    }
+    //fire this on resume button click
+    private void resumeGame()
+    {
+        isPauseMenuShowing = false;
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        return;
+    }
+    private void bindResumeClickEventToButton()
+    {
+        resumeButton.onClick.AddListener(resumeGame);
+    }
+    private void bindQuitClickEventToButton()
+    {
+        quitButton.onClick.AddListener(tearDownHandler);
+    }
+    private void tearDownHandler()
+    {
+        //quit to main menu
+        SceneManager.LoadScene("MainMenu");
+        isPauseMenuShowing = false;
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        //save scores to json
 
-        //Triggers for a single frame, use to count control menu views.
-        if (Input.GetKeyDown("f1"))
-        {
-            Debug.Log(timesViewedControls);
-            timesViewedControls += 1;
-        }
-        //Triggers while a key is held down, use to render the controlCanvas.
-        if (Input.GetKey("f1"))
-        {
-            isControlCanvasShowing = true;
-            controlCanvas.SetActive(true);
-        }
+        //destroy this instance
+        Destroy(gameObject);
     }
     private void Awake()
     {
@@ -84,10 +115,16 @@ public class stageManager : MonoBehaviour
         setUID();
         updateScore(0);
         updateStage(1);
+        pauseMenu.SetActive(false);
+
+        //Add click listener to resume button
+        bindResumeClickEventToButton();
+        bindQuitClickEventToButton();
     }
     void Update()
     {
         stageTimer();
-        showControlCanvas();
+        pauseHandler();
+
     }
 }
