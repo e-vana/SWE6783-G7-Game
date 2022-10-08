@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public AudioSource onHitSound;
+    public int health = 10;
+
     public Camera sceneCamera;
     public float moveSpeed = 1f;
     public float collisionOffset = 0.05f;
@@ -117,4 +120,17 @@ public class PlayerController : MonoBehaviour
         movementInput = movemventValue.Get<Vector2>();
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.name == "Ghost(Clone)")
+        {
+            health -= 2;
+            Debug.Log(health);
+            Debug.Log("Collide with ghost");
+            onHitSound.Play();
+
+        }
+
+    }
 }
