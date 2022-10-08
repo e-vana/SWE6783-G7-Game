@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: -1807428069593353527}
   - component: {fileID: 3535777753370317913}
   - component: {fileID: 6097214798155885370}
+  - component: {fileID: 8819168659436277429}
+  - component: {fileID: -556138382606252721}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Enemy
@@ -163,6 +165,8 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   speed: 1
+  stageManagement: {fileID: 0}
+  scoreValue: 10
 --- !u!58 &6097214798155885370
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -179,3 +183,45 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.08
+--- !u!114 &8819168659436277429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510585926598617421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c58eeb5424684680b172210e7fca50f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  nextWaypointDistance: 0.48
+--- !u!114 &-556138382606252721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510585926598617421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
