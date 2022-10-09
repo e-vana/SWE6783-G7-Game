@@ -83838,7 +83838,7 @@ MonoBehaviour:
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
-  maxFrameTime: 1
+  maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
   euclideanEmbedding:
@@ -83888,6 +83888,10 @@ PrefabInstance:
     - target: {fileID: 2790804982827687603, guid: 16a6856a6d56e4a8b81c92e9398f9457, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4247283007453105286, guid: 16a6856a6d56e4a8b81c92e9398f9457, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6703313932952941932, guid: 16a6856a6d56e4a8b81c92e9398f9457, type: 3}
       propertyPath: m_RootOrder

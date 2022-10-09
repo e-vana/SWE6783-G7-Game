@@ -121,16 +121,24 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(collision.gameObject.tag == "Enemy")
+    //    {
+    //        TakeDamage();
+    //        Debug.Log(health);
+    //        Debug.Log("Collide with ghost");
+    //    }
+    //}
+
+    public void TakeDamage()
     {
-        if(collision.gameObject.name == "Ghost(Clone)")
+        health -= 2;
+        onHitSound.Play();
+        if (health <= 0)
         {
-            health -= 2;
-            Debug.Log(health);
-            Debug.Log("Collide with ghost");
-            onHitSound.Play();
-
+            //Update
+            Destroy(gameObject);
         }
-
     }
 }
