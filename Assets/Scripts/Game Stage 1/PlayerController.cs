@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public AudioSource onHitSound;
-    public int health = 10;
+    public int health = 100;
 
     public Camera sceneCamera;
     public float moveSpeed = 1f;
@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public AudioSource footstepSound;
     private float timer = 0.0f;
     private float stepSoundInterval = 0.3f;
+    private float speedTime = 0f;
+    private bool boosted = false;
 
     private Vector2 mousePosition;
     Vector2 movementInput;
@@ -36,6 +38,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         ProcessInputs();
+
+        if (boosted)
+        {
+            if (speedTime < 5)
+            {
+                moveSpeed = 2f;
+                speedTime += Time.deltaTime;
+            }
+            else
+            {
+                moveSpeed = 1f;
+                boosted = false;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -137,8 +153,27 @@ public class PlayerController : MonoBehaviour
         onHitSound.Play();
         if (health <= 0)
         {
+            health = 0;
             //Update
             Destroy(gameObject);
         }
+    }
+
+    public void AddHealth()
+    {
+        //TODO remove debug
+        Debug.Log("Health potion acquired");
+        health += 25;
+        if (health > 100)
+        {
+            health = 100;
+        }
+    }
+
+    public void AddSpeed()
+    {
+        //TODO remove debug
+        Debug.Log("Speed potion acquired");
+        boosted = true;
     }
 }
