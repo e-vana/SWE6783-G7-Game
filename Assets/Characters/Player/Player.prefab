@@ -130,6 +130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc3632ea1b6447caa45fc725e8714a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onHitSound: {fileID: 0}
+  health: 10
+  sceneCamera: {fileID: 0}
   moveSpeed: 1
   collisionOffset: 0.05
   movementFilter:
@@ -146,6 +149,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  weapon: {fileID: 0}
+  footstepSound: {fileID: 0}
 --- !u!50 &4247283007453105286
 Rigidbody2D:
   serializedVersion: 4
@@ -180,7 +185,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00043936446, y: -0.07133372}
+  m_Offset: {x: 0.0004393533, y: -0.0005247146}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -191,5 +196,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.13978922, y: 0.017332554}
+  m_Size: {x: 0.15667085, y: 0.15895057}
   m_EdgeRadius: 0
