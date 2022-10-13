@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     private float speedTime = 0f;
     private bool boosted = false;
 
+    private float attackSpeed = 1f;
+    private float canAttack = 0f;
+
     private Vector2 mousePosition;
     Vector2 movementInput;
     Rigidbody2D rb;
@@ -137,15 +140,27 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if(collision.gameObject.tag == "Enemy")
-    //    {
-    //        TakeDamage();
-    //        Debug.Log(health);
-    //        Debug.Log("Collide with ghost");
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("collision w/ enemy");
+            if (canAttack <= attackSpeed)
+            {
+                Debug.Log("Attack");
+                TakeDamage();
+                Debug.Log(health);
+                canAttack = 0f;
+            }
+            else
+            {
+                canAttack += Time.deltaTime;
+            }
+            //TakeDamage();
+            //
+            //Debug.Log("Collide with ghost");
+        }
+    }
 
     public void TakeDamage()
     {

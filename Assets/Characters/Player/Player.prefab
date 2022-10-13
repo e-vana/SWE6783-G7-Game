@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onHitSound: {fileID: 0}
-  health: 10
+  health: 100
   sceneCamera: {fileID: 0}
   moveSpeed: 1
   collisionOffset: 0.05
@@ -197,4 +197,4 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.15667085, y: 0.15895057}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.01
