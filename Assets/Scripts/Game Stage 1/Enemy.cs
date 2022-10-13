@@ -9,9 +9,7 @@ public class Enemy : MonoBehaviour
 
     public stageManager stageManagement;
     public int scoreValue = 10;
-    private float health = 20;
-    private float attackSpeed = 1f;
-    private float canAttack = 0f;
+    private float health = 10;
 
     private void Start()
     {
@@ -26,25 +24,26 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            Debug.Log("collision w/ enemy");
-            if(attackSpeed <= canAttack)
-            {
-                Debug.Log("Attack");
-                collision.gameObject.GetComponent<PlayerController>().TakeDamage();
-                canAttack = 0f;
-            } else
-            {
-                canAttack += Time.deltaTime;
-            }
-        }
-    }
+    //private void OnTriggerEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Player")
+    //    {
+    //        Debug.Log("collision w/ enemy");
+    //        if (attackSpeed <= canAttack)
+    //        {
+    //            Debug.Log("Attack");
+    //            collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+    //            canAttack = 0f;
+    //        }
+    //        else
+    //        {
+    //            canAttack += Time.deltaTime;
+    //        }
+    //    }
+    //}
 
     public void TakeDamage()
     {
