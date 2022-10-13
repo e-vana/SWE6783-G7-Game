@@ -9,6 +9,9 @@ public class RandomSpawner : MonoBehaviour
     public int maxEnemies = 25;
     private float elapsed = 0;
     private int enemies = 0;
+    public stageManager stageManagement;
+    public int nextStage;
+
 
     //private int currentTime;
 
@@ -35,10 +38,21 @@ public class RandomSpawner : MonoBehaviour
         int randSpawnPoint = Random.Range(0, spawnPoints.Length);
         int currentTime = (int)Time.timeSinceLevelLoad;
 
+
         if (currentTime > 5 && enemies < maxEnemies)
         {
             Instantiate(enemyPrefabs[randEnemy], spawnPoints[randSpawnPoint].position, transform.rotation);
             enemies++;
+        }
+        if (maxEnemies == enemies)
+        {
+            if (GameObject.FindGameObjectWithTag("Enemy") == null)
+            {
+                stageManagement = FindObjectOfType<stageManager>();
+                stageManagement.changeStage(nextStage);
+                stageManagement.updateStage(nextStage);
+            }
+
         }
     }
 }

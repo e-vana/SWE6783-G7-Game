@@ -969,7 +969,9 @@ MonoBehaviour:
   - {fileID: 1874188278}
   enemyPrefabs:
   - {fileID: 1510585926598617421, guid: d3ded9e64967848af8bfc2801f4ce6e9, type: 3}
-  maxEnemies: 50
+  maxEnemies: 25
+  stageManagement: {fileID: 610588919}
+  nextStage: 2
 --- !u!4 &477655422
 Transform:
   m_ObjectHideFlags: 0

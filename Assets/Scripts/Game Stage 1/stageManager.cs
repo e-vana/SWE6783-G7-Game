@@ -10,6 +10,7 @@ public class stageManager : MonoBehaviour
 {
     public float currentTime;
     private string currentTimeString;
+    private float playTime;
     public string sessionId;
     public int currentStage;
     public string currentStageString = "0";
@@ -29,7 +30,9 @@ public class stageManager : MonoBehaviour
 
     private void stageTimer()
     {
+        playTime = Time.realtimeSinceStartup;
         currentTime = Time.timeSinceLevelLoad;
+        
         int minutes = (int)currentTime / 60;
         int seconds = 0;
         if(currentTime < 60) {
@@ -52,8 +55,6 @@ public class stageManager : MonoBehaviour
     {
         currentScore += score;
         currentScoreString = currentScore.ToString();
-        Debug.Log(currentScoreString);
-
         scoreText.text = "Score:" + currentScoreString;
     }
     public void setUID()
@@ -105,6 +106,11 @@ public class stageManager : MonoBehaviour
 
         //destroy this instance
         Destroy(gameObject);
+    }
+    public void changeStage(int stageIndex)
+    {
+        SceneManager.LoadScene(stageIndex);
+
     }
     private void Awake()
     {

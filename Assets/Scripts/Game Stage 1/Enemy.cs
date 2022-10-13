@@ -10,8 +10,6 @@ public class Enemy : MonoBehaviour
     public stageManager stageManagement;
     public int scoreValue = 10;
     private float health = 10;
-    //private float attackSpeed = 1f;
-    //private float canAttack = 0f;
 
     private void Start()
     {
@@ -26,7 +24,7 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
     }
 
     //private void OnTriggerEnter2D(Collision2D collision)
