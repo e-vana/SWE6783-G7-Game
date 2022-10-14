@@ -6,14 +6,11 @@ public class RandomSpawner : MonoBehaviour
 {
     public Transform[] spawnPoints;
     public GameObject[] enemyPrefabs;
-    public int maxEnemies = 25;
+    public int maxEnemies = 500;
     private float elapsed = 0;
     private int enemies = 0;
     public stageManager stageManagement;
     public int nextStage;
-
-
-    //private int currentTime;
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +31,25 @@ public class RandomSpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        int randEnemy = Random.Range(0, enemyPrefabs.Length);
+        int randEnemy = Random.Range(0, 100);
         int randSpawnPoint = Random.Range(0, spawnPoints.Length);
         int currentTime = (int)Time.timeSinceLevelLoad;
 
 
         if (currentTime > 5 && enemies < maxEnemies)
         {
-            Instantiate(enemyPrefabs[randEnemy], spawnPoints[randSpawnPoint].position, transform.rotation);
+            int enemy;
+            if (randEnemy <= 70)
+            {
+                enemy = 0;
+            } else if (randEnemy <= 95)
+            {
+                enemy = 1;
+            } else
+            {
+                enemy = 2;
+            }
+            Instantiate(enemyPrefabs[enemy], spawnPoints[randSpawnPoint].position, transform.rotation);
             enemies++;
         }
         if (maxEnemies == enemies)

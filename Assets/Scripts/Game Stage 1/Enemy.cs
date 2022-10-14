@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 
     public stageManager stageManagement;
     public int scoreValue = 10;
-    private float health = 10;
+    public float health = 10;
 
     private void Start()
     {
