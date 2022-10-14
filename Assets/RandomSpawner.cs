@@ -25,7 +25,7 @@ public class RandomSpawner : MonoBehaviour
     void Update()
     {
         elapsed += Time.deltaTime;
-        if (elapsed >= .5)
+        if (elapsed >= .2)
         {
             SpawnEnemy();
             elapsed = 0.0f;

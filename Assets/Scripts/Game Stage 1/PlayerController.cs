@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public AudioSource onHitSound;
-    public int health = 100;
+    public int health = 10;
 
     public Camera sceneCamera;
     public float moveSpeed = 1f;
@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+
+    public stageManager stageManagement;
+
 
 
     // Start is called before the first frame update
@@ -164,12 +167,14 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage()
     {
-        health -= 2;
+        health -= 10;
         onHitSound.Play();
         if (health <= 0)
         {
             health = 0;
             //Update
+
+            GameOver();
             Destroy(gameObject);
         }
     }
@@ -191,4 +196,10 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Speed potion acquired");
         boosted = true;
     }
+    private void GameOver()
+    {
+        stageManagement = FindObjectOfType<stageManager>();
+        stageManagement.gameOver();
+    }
+
 }

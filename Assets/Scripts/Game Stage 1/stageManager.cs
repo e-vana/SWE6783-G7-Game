@@ -5,17 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using System.IO;
 
+
+[System.Serializable]
 public class stageManager : MonoBehaviour
 {
     public float currentTime;
-    private string currentTimeString;
-    private float playTime;
+    public float playTime;
     public string sessionId;
     public int currentStage;
-    public string currentStageString = "0";
     public int currentScore = 0;
-    public string currentScoreString = "Score:0";
     public int timesViewedControls = 1;
     public TMPro.TMP_Text timerText;
     public TMPro.TMP_Text stageText;
@@ -27,10 +27,12 @@ public class stageManager : MonoBehaviour
     public Button resumeButton;
     public Button quitButton;
 
+    public SaveToJson saveManager;
+
+    private bool markAsDestroy = false;
 
     private void stageTimer()
     {
-        playTime = Time.realtimeSinceStartup;
         currentTime = Time.timeSinceLevelLoad;
         
         int minutes = (int)currentTime / 60;
@@ -42,20 +44,18 @@ public class stageManager : MonoBehaviour
         {
             seconds = (int)currentTime - (60 * minutes);
         }
-        currentTimeString =  string.Format("{0:00}:{1:00}", minutes, seconds);
-        timerText.text = currentTimeString;
+
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
     public void updateStage(int stage)
     {
         currentStage = stage;
-        currentStageString = currentStage.ToString();
-        stageText.text = "Stage:" + currentStageString;
+        stageText.text = "Stage:" + currentStage.ToString();
     }
     public void updateScore(int score)
     {
         currentScore += score;
-        currentScoreString = currentScore.ToString();
-        scoreText.text = "Score:" + currentScoreString;
+        scoreText.text = "Score:" + currentScore.ToString();
     }
     public void setUID()
     {
@@ -97,31 +97,48 @@ public class stageManager : MonoBehaviour
     }
     private void tearDownHandler()
     {
-        //quit to main menu
         SceneManager.LoadScene("MainMenu");
         isPauseMenuShowing = false;
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
-        //save scores to json
-
-        //destroy this instance
-        Destroy(gameObject);
+        currentScore = 0;
+        markAsDestroy = true;
+        saveSession();
     }
     public void changeStage(int stageIndex)
     {
         SceneManager.LoadScene(stageIndex);
-
     }
+    public void gameOver()
+    {
+        isPauseMenuShowing = false;
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        currentScore = 0;
+        SceneManager.LoadScene("GameOver");
+        markAsDestroy = true;
+        saveSession();
+    }
+    private void saveSession()
+    {
+        string myJson = JsonUtility.ToJson(this);
+        Debug.Log(myJson);
+        File.WriteAllText(Application.dataPath + "/" + "playSession" + ".json", myJson);
+        //string json = JsonUtility.ToJson(gameObject, true);
+    }
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
     }
     private void Start()
     {
+        playTime = Time.realtimeSinceStartup;
         setUID();
         updateScore(0);
         updateStage(1);
         pauseMenu.SetActive(false);
+        resumeGame();
 
         //Add click listener to resume button
         bindResumeClickEventToButton();
@@ -131,6 +148,12 @@ public class stageManager : MonoBehaviour
     {
         stageTimer();
         pauseHandler();
+        if (markAsDestroy)
+        {
+            Debug.Log("Marked to destroy");
+            Destroy(gameObject);
+        }
+
 
     }
 }
