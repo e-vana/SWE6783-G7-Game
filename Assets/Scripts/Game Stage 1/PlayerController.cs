@@ -183,10 +183,10 @@ public class PlayerController : MonoBehaviour
     {
         //TODO remove debug
         Debug.Log("Health potion acquired");
-        health += 25;
-        if (health > 100)
+        health += 10;
+        if (health > 30)
         {
-            health = 100;
+            health = 30;
         }
     }
 
