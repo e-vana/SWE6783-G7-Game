@@ -68,6 +68,7 @@ public class stageManager : MonoBehaviour
         {
             isPauseMenuShowing = true;
             pauseMenu.SetActive(true);
+            timesViewedControls += 1;
             Time.timeScale = 0;
             return;
         }
@@ -100,10 +101,10 @@ public class stageManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
         isPauseMenuShowing = false;
         pauseMenu.SetActive(false);
+        saveSession();
         Time.timeScale = 1;
         currentScore = 0;
         markAsDestroy = true;
-        saveSession();
     }
     public void changeStage(int stageIndex)
     {
@@ -114,10 +115,10 @@ public class stageManager : MonoBehaviour
         isPauseMenuShowing = false;
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
+        saveSession();
         currentScore = 0;
         SceneManager.LoadScene("GameOver");
         markAsDestroy = true;
-        saveSession();
     }
     private void saveSession()
     {
