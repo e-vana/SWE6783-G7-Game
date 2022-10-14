@@ -133,7 +133,6 @@ public class stageManager : MonoBehaviour
     }
     private void Start()
     {
-        playTime = Time.realtimeSinceStartup;
         setUID();
         updateScore(0);
         updateStage(1);
@@ -146,6 +145,8 @@ public class stageManager : MonoBehaviour
     }
     void Update()
     {
+        playTime = Time.realtimeSinceStartup;
+
         stageTimer();
         pauseHandler();
         if (markAsDestroy)
