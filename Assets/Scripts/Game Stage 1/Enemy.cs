@@ -50,7 +50,6 @@ public class Enemy : MonoBehaviour
         health -= 10;
         if (health <= 0)
         {
-            //Update 
             stageManagement.updateScore(scoreValue);
             Destroy(gameObject);
         }

@@ -20,8 +20,8 @@ public class HealthPotion : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
             collision.gameObject.GetComponent<PlayerController>().AddHealth();
+            Destroy(gameObject);
         }
     }
 }
