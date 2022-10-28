@@ -28,7 +28,13 @@ public class RandomSpawner : MonoBehaviour
             elapsed = 0.0f;
         }
     }
-
+    public bool IsSpawnPointVisibleOnScreen(Transform spawnPoint)
+    {
+        Camera mainCamera = FindObjectOfType<Camera>();
+        Vector3 screenPoint = mainCamera.WorldToViewportPoint(spawnPoint.position);
+        bool onScreen = screenPoint.x > 0 && screenPoint.y > 0 && screenPoint.x < 1 && screenPoint.y < 1;
+        return onScreen;
+    }
     public void SpawnEnemy()
     {
         int randEnemy = Random.Range(0, 100);
@@ -49,8 +55,11 @@ public class RandomSpawner : MonoBehaviour
             {
                 enemy = 2;
             }
-            Instantiate(enemyPrefabs[enemy], spawnPoints[randSpawnPoint].position, transform.rotation);
-            enemies++;
+            if (!IsSpawnPointVisibleOnScreen(spawnPoints[randSpawnPoint])){
+                Instantiate(enemyPrefabs[enemy], spawnPoints[randSpawnPoint].position, transform.rotation);
+                enemies++;
+            }
+
         }
         if (maxEnemies == enemies)
         {
