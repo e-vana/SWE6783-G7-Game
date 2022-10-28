@@ -174,8 +174,8 @@ public class PlayerController : MonoBehaviour
             health = 0;
             //Update
 
-            GameOver();
             Destroy(gameObject);
+            GameOver();
         }
     }
 

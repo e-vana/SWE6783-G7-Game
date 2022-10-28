@@ -1074,11 +1074,12 @@ MonoBehaviour:
   - {fileID: 493920906}
   - {fileID: 608586123}
   - {fileID: 1874188278}
+  - {fileID: 987116604}
   enemyPrefabs:
   - {fileID: 1510585926598617421, guid: d3ded9e64967848af8bfc2801f4ce6e9, type: 3}
   - {fileID: 8274787331339966447, guid: 8341a6bb704b9474cbc0d708e7ed339b, type: 3}
   - {fileID: 3747560503188264213, guid: 94e21b34a651346d5b740f6a5bd372d3, type: 3}
-  maxEnemies: 500
+  maxEnemies: 1
   stageManagement: {fileID: 610588919}
   nextStage: 2
 --- !u!4 &477655422
