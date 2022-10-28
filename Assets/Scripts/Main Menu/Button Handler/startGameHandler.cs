@@ -14,4 +14,13 @@ public class startGameHandler : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    public void toControlsScreen()
+    {
+        SceneManager.LoadScene("GameControls");
+
+    }
+    public void quitGame()
+    {
+        Application.Quit();
+    }
 }
